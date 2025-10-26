@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Green Titans 2025–26 EVM Voting</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+  :root{
+    --green:#2e7d32;
+    --soft:#e8f5e9;
+    --card:#ffffffcc; /* semi-transparent */
+  }
+
+  body{
+    margin:0;
+    padding:0;
+    font-family:'Inter', sans-serif;
+    color:#123;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-height:100vh;
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+  }
+
+  h1{
+    color:#fff;
+    margin-top:24px;
+    font-size:2em;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.4);
+    text-align:center;
+  }
+
+  h2{
+    color:#f0fff0;
+    margin:12px 0 24px;
+    font-weight:600;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    text-align:center;
+  }
+
+  .parties {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap:20px;
+    width:90%;
+    max-width:1000px;
+    justify-items:center;
+    margin-bottom:30px;
+  }
+
+  .party-card{
+    width:100%;
+    background: var(--card);
+    border-radius:16px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    padding:20px;
+    text-align:center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(6px);
+  }
+  .party-card:hover{
+    transform: translateY(-6px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.25);
+  }
+
+  .logo{
+    font-size:48px;
+    display:block;
+    margin:0 auto 12px;
+  }
+
+  .party-name{
+    font-weight:700;
+    color:var(--green);
+    font-size:18px;
+    margin-bottom:6px;
+  }
+
+  .manifesto{
+    font-size:14px;
+    color:#234;
+    line-height:1.3;
+  }
+
+  .center{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+    margin-bottom:20px;
+  }
+
+  .start-btn, .show-results, .reset{
+    background: linear-gradient(45deg,#4caf50,#81c784);
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow:0 6px 14px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+  }
+  .start-btn:hover, .show-results:hover, .reset:hover{
+    transform: translateY(-3px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.25);
+  }
+  .show-results{ background: linear-gradient(45deg,#1976d2,#64b5f6);}
+  .reset{ background: linear-gradient(45deg,#d32f2f,#e57373);}
+
+  .evm, .results-screen{
+    width:360px;
+    border-radius:20px;
+    padding:22px;
+    background: var(--card);
+    box-shadow:0 12px 30px rgba(0,0,0,0.25);
+    display:none;
+    backdrop-filter: blur(6px);
+    margin-bottom:30px;
+  }
+
+  .candidate{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#f1f8e9;
+    padding:12px 14px;
+    margin:10px 0;
+    border-radius:12px;
+    font-size:18px;
+  }
+
+  .vote-btn{
+    background: linear-gradient(45deg,#4caf50,#81c784);
+    color:white;
+    border:none;
+    padding:8px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    transition: transform 0.2s ease;
+  }
+  .vote-btn:hover{
+    transform: translateY(-2px);
+  }
+
+  .light{
+    width:16px; height:16px; border-radius:50%; background:gray; margin-left:8px; transition:all 0.25s ease;
+  }
+
+  .thankyou{
+    color:#1b5e20;
+    font-weight:700;
+    display:none;
+    margin-top:12px;
+    text-align:center;
+  }
+
+  .results p{
+    margin:8px 0;
+    font-size:16px;
+    color:#113;
+  }
+  .winner{
+    background: linear-gradient(90deg,#e6f4ea,#ffffff);
+    border-left:6px solid var(--green);
+    padding:10px 14px;
+    border-radius:12px;
+    box-shadow:0 8px 25px rgba(46,125,50,0.2);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:800;
+  }
+  .glow{
+    box-shadow: 0 10px 35px rgba(46,125,50,0.3), 0 0 20px rgba(46,125,50,0.15) inset;
+    animation: pulse 1.2s infinite;
+  }
+  @keyframes pulse{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-4px);}
+    100%{transform:translateY(0);}
+  }
+
+  #confetti{
+    position:fixed; left:0; top:0; pointer-events:none; width:100vw; height:100vh; z-index:9999; display:none;
+  }
+
+</style>
+</head>
+<body>
+
+<h1>🗳️ Green Titans 2025–26 EVM Voting</h1>
+<h2>Party Information</h2>
+
+<div class="parties" id="parties">
+  <div class="party-card">
+    <div class="logo">🌳</div>
+    <div class="party-name">Green Horizon Party (GHP)</div>
+    <div class="manifesto">“We promise a cleaner dawn for every generation — planting trees, reducing waste, and spreading eco-education to every corner of the nation.”</div>
+  </div>
+  <div class="party-card">
+    <div class="logo">💧</div>
+    <div class="party-name">Blue Planet Alliance (BPA)</div>
+    <div class="manifesto">“Saving every drop, protecting every ocean — together we’ll make Earth’s blue shine brighter.”</div>
+  </div>
+  <div class="party-card">
+    <div class="logo">☀️</div>
+    <div class="party-name">Solar Future Front (SFF)</div>
+    <div class="manifesto">“We believe in a future powered by the sun — clean, limitless, and bright for all.”</div>
+  </div>
+  <div class="party-card">
+    <div class="logo">♻️</div>
+    <div class="party-name">ReLeaf Movement (RLM)</div>
+    <div class="manifesto">“Let’s give the planet a second chance — recycle, restore, and reimagine our world together.”</div>
+  </div>
+</div>
+
+<div class="center">
+  <button class="start-btn" id="startBtn">Start Voting (Secret Voter Screen)</button>
+</div>
+
+<div class="evm" id="evmBox">
+<h2>Cast Your Vote</h2>
+
+<div class="candidate">
+  <div class="name">🌳 Green Horizon Party (GHP)</div>
+  <div style="display:flex; align-items:center"><button class="vote-btn" onclick="vote(0)">Vote</button><div id="light0" class="light"></div></div>
+</div>
+<div class="candidate">
+  <div class="name">💧 Blue Planet Alliance (BPA)</div>
+  <div style="display:flex; align-items:center"><button class="vote-btn" onclick="vote(1)">Vote</button><div id="light1" class="light"></div></div>
+</div>
+<div class="candidate">
+  <div class="name">☀️ Solar Future Front (SFF)</div>
+  <div style="display:flex; align-items:center"><button class="vote-btn" onclick="vote(2)">Vote</button><div id="light2" class="light"></div></div>
+</div>
+<div class="candidate">
+  <div class="name">♻️ ReLeaf Movement (RLM)</div>
+  <div style="display:flex; align-items:center"><button class="vote-btn" onclick="vote(3)">Vote</button><div id="light3" class="light"></div></div>
+</div>
+
+<p class="thankyou" id="ty">✅ Thank you for voting!</p>
+<div style="display:flex; gap:8px; justify-content:center; margin-top:10px;">
+  <button class="show-results" onclick="showResultsScreen()">Show Results</button>
+</div>
+</div>
+
+<div class="results-screen" id="resultsScreen">
+<h2>📊 Election Results</h2>
+<div class="results" id="resultsArea"></div>
+<div style="display:flex; justify-content:center; gap:10px; margin-top:12px;">
+  <button class="reset" onclick="resetAll()">Reset</button>
+</div>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+let votes=[0,0,0,0];
+const names=["Green Horizon Party (GHP)","Blue Planet Alliance (BPA)","Solar Future Front (SFF)","ReLeaf Movement (RLM)"];
+const startBtn=document.getElementById('startBtn');
+const evmBox=document.getElementById('evmBox');
+const resultsScreen=document.getElementById('resultsScreen');
+const resultsArea=document.getElementById('resultsArea');
+const ty=document.getElementById('ty');
+
+startBtn.addEventListener('click',()=>{
+  document.getElementById('parties').style.display='none';
+  startBtn.style.display='none';
+  evmBox.style.display='block';
+});
+
+function vote(i){
+  votes[i]+=1;
+  flashLight(i);
+  ty.style.display='block';
+  setTimeout(()=> ty.style.display='none',1100);
+}
+
+function flashLight(i){
+  const light=document.getElementById('light'+i);
+  light.style.background='limegreen';
+  setTimeout(()=> light.style.background='gray',600);
+}
+
+function showResultsScreen(){
+  evmBox.style.display='none';
+  const total=votes.reduce((a,b)=>a+b,0);
+  const maxVotes=Math.max(...votes);
+  const winners=votes.map((v,i)=>v===maxVotes&&maxVotes>0?i:-1).filter(i=>i>=0);
+  let html='';
+  for(let i=0;i<votes.length;i++){
+    if(votes[i]===maxVotes&&maxVotes>0) html+=`<p class="winner glow">🏆 ${names[i]}: ${votes[i]} votes</p>`;
+    else html+=`<p>${names[i]}: ${votes[i]} votes</p>`;
+  }
+  html+=`<br><strong>Total Votes:</strong> ${total}<br>`;
+  if(maxVotes===0) html+=`<br><strong>No votes cast yet.</strong>`;
+  else if(winners.length>1) html+=`<br><strong>It’s a tie!</strong> 🟰 Between: ${winners.map(i=>names[i]).join(', ')}`;
+  else html+=`<br><strong>Winner:</strong> ${names[winners[0]]} 🏆`;
+  resultsArea.innerHTML=html;
+  resultsScreen.style.display='block';
+  setTimeout(()=>resultsScreen.classList.add('show'),10);
+  if(maxVotes>0){startConfetti();setTimeout(stopConfetti,3500);}
+}
+
+function resetAll(){
+  votes=[0,0,0,0];
+  resultsArea.innerHTML='';
+  resultsScreen.classList.remove('show');
+  resultsScreen.style.display='none';
+  document.getElementById('parties').style.display='grid';
+  startBtn.style.display='inline-block';
+}
+
+const canvas=document.getElementById('confetti');
+const ctx=canvas.getContext('2d');
+let confettiParticles=[],confettiRunning=false;
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+window.addEventListener('resize',resizeCanvas);
+resizeCanvas();
+function random(min,max){return Math.random()*(max-min)+min;}
+function startConfetti(){
+  if(confettiRunning)return;
+  confettiRunning=true;
+  canvas.style.display='block';
+  confettiParticles=[];
+  const colors=['#FFB300','#66BB6A','#29B6F6','#FF7043','#9CCC65','#8E24AA'];
+  for(let i=0;i<90;i++){confettiParticles.push({x:random(0,canvas.width),y:random(-canvas.height,0),w:random(6,12),h:random(8,16),vx:random(-1.2,1.2),vy:random(2,6),r:random(0,360),color:colors[Math.floor(random(0,colors.length))]});}
+  requestAnimationFrame(confettiLoop);
+}
+function confettiLoop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let p of confettiParticles){
+    p.x+=p.vx;p.y+=p.vy;p.r+=6;
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate((p.r*Math.PI)/180);
+    ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();
+  }
+  confettiParticles=confettiParticles.filter(p=>p.y<canvas.height+40);
+  if(confettiParticles.length>0&&confettiRunning){requestAnimationFrame(confettiLoop);}
+  else{stopConfetti();}
+}
+function stopConfetti(){confettiRunning=false;canvas.style.display='none';ctx.clearRect(0,0,canvas.width,canvas.height);confettiParticles=[];}
+</script>
+</body>
+</html>
