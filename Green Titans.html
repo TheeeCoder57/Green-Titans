@@ -10,7 +10,7 @@
   :root{
     --green:#2e7d32;
     --soft:#e8f5e9;
-    --card:#ffffffcc; /* semi-transparent */
+    --card:#ffffffcc;
   }
 
   body{
@@ -185,6 +185,14 @@
     100%{transform:translateY(0);}
   }
 
+  .footer{
+    color:#fff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    margin:20px 0;
+    font-size:14px;
+    font-weight:600;
+  }
+
   #confetti{
     position:fixed; left:0; top:0; pointer-events:none; width:100vw; height:100vh; z-index:9999; display:none;
   }
@@ -223,6 +231,8 @@
   <button class="start-btn" id="startBtn">Start Voting (Secret Voter Screen)</button>
 </div>
 
+<p class="footer">Made by – The Green Titans Club (Batool, Lalith, Tejas)</p>
+
 <div class="evm" id="evmBox">
 <h2>Cast Your Vote</h2>
 
@@ -255,6 +265,7 @@
 <div style="display:flex; justify-content:center; gap:10px; margin-top:12px;">
   <button class="reset" onclick="resetAll()">Reset</button>
 </div>
+<p class="footer">Made by – The Green Titans Club (Batool, Lalith, Tejas)</p>
 </div>
 
 <canvas id="confetti"></canvas>
@@ -347,3 +358,4 @@ function stopConfetti(){confettiRunning=false;canvas.style.display='none';ctx.cl
 </script>
 </body>
 </html>
+
